@@ -1,329 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Meri pagaliya | open to kro n🙃</title>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Silence | Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Tenor+Sans&family=Montserrat:wght@200&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c5a059;
+            --soft-white: #f5f5f5;
+            --bg: #030303;
+        }
 
-<style>
-    :root {
-        --crimson: #720026;
-        --gold: #D4AF37;
-        --void: #050505;
-        --glass-bg: rgba(15, 15, 15, 0.8);
-        --glass-border: rgba(212, 175, 55, 0.3);
-    }
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background-color: var(--bg);
+            color: white;
+            overflow: hidden;
+            font-family: 'Tenor Sans', sans-serif;
+        }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* Luxury Preloader */
+        #gate-keeper {
+            position: fixed; inset: 0;
+            background: #000;
+            z-index: 9999;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: opacity 4s cubic-bezier(0.7, 0, 0.3, 1);
+        }
 
-    body {
-        height: 100vh; height: 100dvh;
-        overflow: hidden; background: var(--void);
-        color: white; font-family: 'Lato', sans-serif;
-        display: flex; align-items: center; justify-content: center;
-        perspective: 1200px;
-    }
+        .enter-btn {
+            background: none;
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            color: var(--gold);
+            font-family: 'Tenor Sans', sans-serif;
+            font-size: 11px;
+            letter-spacing: 1.5em;
+            text-transform: uppercase;
+            cursor: pointer;
+            padding: 25px 50px;
+            transition: 1.5s;
+            text-decoration: none;
+        }
 
-    /* --- DYNAMIC BACKGROUND --- */
-    #atmosphereCanvas {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        z-index: 0; pointer-events: none;
-    }
+        .enter-btn:hover {
+            letter-spacing: 1.8em;
+            background: rgba(197, 160, 89, 0.05);
+            border-color: var(--gold);
+        }
 
-    /* --- CINEMATIC INTRO --- */
-    #intro-layer {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(circle, #1a0b10 0%, #000 100%);
-        z-index: 999;
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        transition: opacity 1.2s cubic-bezier(0.7, 0, 0.3, 1);
-    }
+        /* Content */
+        main {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 5s ease;
+        }
 
-    .enter-btn {
-        background: transparent; border: 1px solid var(--gold);
-        color: var(--gold); padding: 20px 60px;
-        font-family: 'Cinzel', serif; letter-spacing: 6px;
-        cursor: pointer; transition: 0.5s;
-        text-transform: uppercase;
-        box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
-    }
-    
-    .enter-btn:hover { 
-        box-shadow: 0 0 40px rgba(212, 175, 55, 0.4); 
-        background: rgba(212, 175, 55, 0.1);
-    }
+        main.active { opacity: 1; }
 
-    /* --- THE LUXURY CARD --- */
-    #tiltCard {
-        position: relative; z-index: 10;
-        transform-style: preserve-3d;
-        width: 90%; max-width: 500px;
-        display: none; /* Initially hidden */
-    }
+        .main-msg {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 8vw, 4rem);
+            font-style: italic;
+            color: var(--soft-white);
+            margin-bottom: 20px;
+            min-height: 1.2em; /* Prevents layout jump */
+        }
 
-    .glass-panel {
-        background: var(--glass-bg);
-        backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-        border: 1px solid var(--glass-border);
-        padding: 60px 40px; text-align: center;
-        box-shadow: 0 40px 100px rgba(0,0,0,0.9);
-        opacity: 0; transform: translateY(60px) scale(0.95);
-        transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.2, 1, 0.3, 1);
-    }
-    
-    .glass-panel.revealed { opacity: 1; transform: translateY(0) scale(1); }
+        .line {
+            width: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 40px auto;
+            transition: width 5s ease 2s;
+        }
 
-    /* Elegant corners */
-    .corner {
-        position: absolute; width: 25px; height: 25px;
-        border-color: var(--gold); border-style: solid; opacity: 0.8;
-    }
-    .tl { top: 15px; left: 15px; border-width: 1px 0 0 1px; }
-    .tr { top: 15px; right: 15px; border-width: 1px 1px 0 0; }
-    .bl { bottom: 15px; left: 15px; border-width: 0 0 1px 1px; }
-    .br { bottom: 15px; right: 15px; border-width: 0 1px 1px 0; }
+        main.active .line { width: 350px; }
 
-    /* --- CLOCKS --- */
-    .time-display {
-        display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.15);
-        padding-bottom: 25px; margin-bottom: 35px;
-    }
-    .clock-label { font-family: 'Cinzel'; font-size: 0.6rem; color: var(--gold); letter-spacing: 2px; display: block; }
-    .clock-value { font-size: 0.95rem; font-weight: 300; }
+        .quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--gold);
+            max-width: 80%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 4s ease 5s;
+            font-style: italic;
+        }
 
-    /* --- CONTENT AREA --- */
-    #content-stage { min-height: 240px; display: flex; flex-direction: column; justify-content: center; }
+        main.active .quote { opacity: 0.8; transform: translateY(0); }
 
-    .shimmer-title {
-        font-family: 'Great Vibes', cursive; font-size: 3.8rem;
-        background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-        background-size: 200% auto; -webkit-background-clip: text; color: transparent;
-        animation: shine 5s linear infinite; margin-bottom: 25px;
-    }
-    @keyframes shine { to { background-position: 200% center; } }
+        #canvas-bg { position: absolute; top: 0; left: 0; z-index: 1; }
+        .vignette {
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.95) 100%);
+            z-index: 2; pointer-events: none;
+        }
 
-    .message-text { font-size: 1.15rem; line-height: 1.8; color: rgba(255,255,255,0.9); font-weight: 300; }
-
-    .heart-btn {
-        margin-top: 35px; background: transparent; border: 1px solid rgba(255,255,255,0.3);
-        color: white; padding: 18px 50px; font-family: 'Cinzel'; letter-spacing: 3px;
-        cursor: pointer; transition: 0.4s;
-    }
-    .heart-btn:hover { background: var(--gold); color: #050505; border-color: var(--gold); transform: translateY(-2px); }
-    .whatsapp-mode { border-color: #25D366; color: #25D366; }
-
-    .cursor { display: inline-block; width: 2px; height: 1.2em; background: var(--gold); animation: blink 1s infinite; vertical-align: middle; }
-    @keyframes blink { 50% { opacity: 0; } }
-</style>
+        /* Cursor Effect */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background-color: var(--gold);
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
 </head>
 <body>
 
-<canvas id="atmosphereCanvas"></canvas>
-
-<div id="intro-layer">
-    <div style="font-family: 'Great Vibes'; font-size: 4.5rem; margin-bottom: 10px;">For My Jaan, meri pyaari si pagaliya, ummmmaaahhh...</div>
-    <div style="font-family: 'Cinzel'; color: var(--gold); letter-spacing: 6px; margin-bottom: 60px;">To suru kre...? • 2026</div>
-    <button class="enter-btn" onclick="initiateSequence()">Yhn click to kro mera nangu pungu sa shaitaan baccha....hihihi...pagli.</button>
-</div>
-
-<div id="tiltCard">
-    <div class="glass-panel" id="mainPanel">
-        <div class="corner tl"></div><div class="corner tr"></div>
-        <div class="corner bl"></div><div class="corner br"></div>
-
-        <div class="time-display">
-            <div style="text-align: left;">
-                <span class="clock-label">Current Time</span>
-                <span class="clock-value" id="clock-ist">--:--:--</span>
-            </div>
-            <div style="text-align: right;">
-                <span class="clock-label">Our 2026 Journey</span>
-                <span class="clock-value" id="clock-journey">Loading...</span>
-            </div>
-        </div>
-
-        <div id="content-stage">
-            <h1 class="shimmer-title" id="stage-title">Happy New Year pagaliya...</h1>
-            <p class="message-text" id="stage-text"></p>
-        </div>
-
-        <button class="heart-btn" id="actionBtn">offho fir se click kro pgli..</button>
-        <div style="margin-top: 45px; font-size: 0.6rem; color: rgba(255,255,255,0.3); letter-spacing: 3px;">Exclusively for You • From your Bandariya..hehehe</div>
+    <div id="gate-keeper">
+        <button class="enter-btn" onclick="initiate()">Enter the Silence</button>
     </div>
-</div>
 
-<script>
-    const CONFIG = {
-        startDate: "2026-01-01T00:00:00+05:30",
-        partnerPhone: "123",
-    };
+    <audio id="piano-track" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3" type="audio/mpeg">
+    </audio>
 
-    const SCENES = [
-        { title: "My Dearest Jaan", text: "As the world celebrates the turning of time, everything else fades away. There is only this moment, and the overwhelming gratitude that I get to start it with you." },
-        { title: "Meri Jaan💋", text: "Duniya bahar shor macha rahi hai, lekin meri Jaan, mai bas aapke saath is sukoon bhare pal me rehna chahta hu. 2026 ki shuruat aapke saath...abhi bas yhi ek gift chahiye tha mujhe, bs yhi ek..isiliye keh rha tha ki mt soiye.meri pgli..ummahh😘🙃..." },
-        { title: "Sacred Rhythm", text: "Upar clock ko dekho, Baccha. Hum kahin bhi rahe, ham dono ka dil isi perfect rhythm mei hamesha locked rahega." },
-        { title: "Meri Heroine", text: "Jab mai 2025 ko yaad karunga to sabse khoobsurat koi jagah hogi to wo bs aapka gle se lgana, kissi krna..hehehe... aur bs aapke hone ka ehsaas hoga. Har mushkil me aap mera sukoon, meri chhoti si duniya aur mera sab kuch thi aur hamesha rehna...meri pagaliya." },
-        { title: "Meri ek Promise", text: "To 2026 ke liye mera ek wada hai, Baccha: Mai aapki har choti baat sununga, aapke har bade sapne ko protect karunga mgr jo sahi hoga wahi pgli.., aur har saans ke saath aapko pehle se zyada pyaar karunga." },
-        { title: "Meri nanhi si Jaan", text: "Is bhaagti hui duniya me meri jaan tum hi to mera sukoon ho. Har chaos me ek thehraav ho, tum wo gravity ho jo mujhe sambhaal ke rakhti ho, itna gussa krta hu fir bhi pyaar krti ho... tum hi to meri jaan ho, mera sukoon, mera sbkuch ho meri pgli..." },
-        { title: "Our Destiny", text: "Mujhe nhi pta kl kya hoga Baccha, lekin mujhe pata hai ki mera 'kl' kiske haath me hai. Jab tak aapka haath mere haath me hai, mai 2026 kya, har saal ke liye taiyaar hu, meri nanhi si jaan.." },
-        { title: "Naya Chapter", text: "Yeh sirf ek naya saal nahi hai, yeh hamare liye ek naya adhyaaya hai... Kismat ne ise likha hai aur hamare pyaar ne ise sign kiya hai. Chlo ise ekdm sundr sa aur pyaara banate hain, meri pgli, ummmmaaahhh😘....." },
-        { title: "Sirf Aapka", text: "I love you. Bohot jyada, hdd se zyada. Itna pyaar ki ye jo upr clock hai wo bhi kabhi count nahi kar payegi. Forever yours, Hamesha, hamesha ke liye bs aapka, keval aapka.." },
-        { title: "Be Mine Always?", text: "Babua, chlo 2026 mein ek saath kadam rakhte hain. Mujhe ek message karo aur hamare is saal ki shuruat kro. Pgli mai intezaar kar raha hoon msg ka...! hn gussa nahi krta to syd ye time se ho jaata, sorry mera baccha, bina mtlb ka chillata rhta hu...mera pyaara sa babu..ummmmmmmmaaaahhhhhhh💋💋....." }
-    ];
+    <canvas id="canvas-bg"></canvas>
+    <div class="vignette"></div>
 
-    const ui = {
-        intro: document.getElementById('intro-layer'),
-        panel: document.getElementById('mainPanel'),
-        tiltCard: document.getElementById('tiltCard'),
-        title: document.getElementById('stage-title'),
-        text: document.getElementById('stage-text'),
-        btn: document.getElementById('actionBtn'),
-        clockIST: document.getElementById('clock-ist'),
-        clockJourney: document.getElementById('clock-journey')
-    };
+    <main id="content">
+        <div>
+            <h1 class="main-msg" id="typewriter"></h1>
+            <div class="line"></div>
+            <p class="quote">"Your silence is louder than any words you could have said."</p>
+        </div>
+    </main>
 
-    let step = 0;
-    let isTyping = false;
+    <script>
+        const message = "ek msg hi kr di hoti...";
+        let i = 0;
 
-    function initiateSequence() {
-        ui.intro.style.opacity = '0';
-        setTimeout(() => {
-            ui.intro.style.display = 'none';
-            ui.tiltCard.style.display = 'block';
-            setTimeout(() => ui.panel.classList.add('revealed'), 100);
-        }, 1200);
+        function typeWriter() {
+            if (i < message.length) {
+                document.getElementById("typewriter").innerHTML += message.charAt(i);
+                i++;
+                setTimeout(typeWriter, 150); // Speed of typing
+            }
+        }
 
-        startClocks();
-        typeWriter(SCENES[0].text);
-        document.addEventListener('mousemove', handleTilt);
-        animate(); 
-    }
-
-    function handleTilt(e) {
-        const x = (e.clientX / window.innerWidth - 0.5) * -12;
-        const y = (e.clientY / window.innerHeight - 0.5) * 12;
-        ui.tiltCard.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`;
-    }
-
-    function startClocks() {
-        setInterval(() => {
-            const now = new Date();
-            ui.clockIST.textContent = now.toLocaleTimeString('en-US', {timeZone: 'Asia/Kolkata', hour12: true});
+        function initiate() {
+            const audio = document.getElementById('piano-track');
+            audio.volume = 0.5;
             
-            const diff = Date.now() - new Date(CONFIG.startDate).getTime();
-            const d = Math.floor(diff / 86400000);
-            const h = Math.floor((diff % 86400000) / 3600000);
-            const m = Math.floor((diff % 3600000) / 60000);
-            const s = Math.floor((diff % 60000) / 1000);
-            ui.clockJourney.textContent = `${d}d ${h}h ${m}m ${s}s`;
-        }, 1000);
-    }
+            // Try to play audio
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Interaction required for audio");
+                });
+            }
 
-    function typeWriter(txt, i = 0) {
-        if (i === 0) {
-            ui.text.innerHTML = "";
-            isTyping = true;
-            ui.btn.style.opacity = "0.5";
-            ui.btn.style.pointerEvents = "none";
-        }
-
-        if (i < txt.length) {
-            ui.text.innerHTML += txt.charAt(i);
-            let speed = Math.random() * 30 + 20;
-            if (['.', ',', '!'].includes(txt.charAt(i))) speed += 200;
-            setTimeout(() => typeWriter(txt, i + 1), speed);
-        } else {
-            ui.text.innerHTML += "<span class='cursor'></span>";
-            isTyping = false;
-            ui.btn.style.opacity = "1";
-            ui.btn.style.pointerEvents = "all";
-        }
-    }
-
-    ui.btn.addEventListener('click', () => {
-        if (isTyping) return;
-        createExplosion(window.innerWidth/2, window.innerHeight/2);
-        step++;
-        if (step < SCENES.length) {
-            ui.title.style.opacity = 0;
+            document.getElementById('gate-keeper').style.opacity = '0';
             setTimeout(() => {
-                ui.title.textContent = SCENES[step].title;
-                ui.title.style.opacity = 1;
-                typeWriter(SCENES[step].text);
-                if (step === SCENES.length - 1) {
-                    ui.btn.textContent = "Ab Msg kr bhi do meri Pagaliya🙃❤️";
-                    ui.btn.classList.add('whatsapp-mode');
-                }
-            }, 500);
-        } else {
-            window.location.href = `https://wa.me/${CONFIG.partnerPhone}?text=${encodeURIComponent("Thinking something....? to bol do naa pgli....hn suniye agr mai so rha hu to aaj seedhe video call kariyega, theek na, meri pyaari si jaan..")}`;
+                document.getElementById('gate-keeper').style.display = 'none';
+                document.getElementById('content').classList.add('active');
+                // Start typewriter after the screen fades in
+                setTimeout(typeWriter, 1000);
+            }, 3000);
         }
-    });
 
-    /* --- FULL VISUAL ENGINE (Restored) --- */
-    const canvas = document.getElementById('atmosphereCanvas');
-    const ctx = canvas.getContext('2d');
-    let w, h, fireworks = [], particles = [];
+        // Particle System
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
 
-    function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-    window.addEventListener('resize', resize);
-    resize();
-
-    // Fill background with ambient golden dust
-    for(let i=0; i<60; i++) {
-        particles.push({ x: Math.random()*w, y: Math.random()*h, s: Math.random()*2, vx: Math.random()-0.5, vy: Math.random()-0.5 });
-    }
-
-    function createExplosion(x, y) {
-        for(let i=0; i<50; i++) {
-            const angle = Math.random() * Math.PI * 2;
-            const velocity = Math.random() * 6 + 2;
-            fireworks.push({
-                x: x, y: y,
-                vx: Math.cos(angle) * velocity,
-                vy: Math.sin(angle) * velocity,
-                life: 1.0,
-                size: Math.random() * 3 + 1,
-                color: `rgba(212, 175, 55, ${Math.random()})`
-            });
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
-    }
+        window.addEventListener('resize', resize);
+        resize();
 
-    function animate() {
-        ctx.clearRect(0, 0, w, h);
-        
-        // Dust
-        particles.forEach(p => {
-            ctx.fillStyle = "rgba(212, 175, 55, 0.3)";
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.s, 0, Math.PI*2); ctx.fill();
-            p.x += p.vx; p.y += p.vy;
-            if(p.x < 0) p.x = w; if(p.x > w) p.x = 0;
-            if(p.y < 0) p.y = h; if(p.y > h) p.y = 0;
-        });
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.alpha = Math.random() * 0.5;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = `rgba(197, 160, 89, ${this.alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
 
-        // Fireworks
-        fireworks.forEach((f, i) => {
-            ctx.globalAlpha = f.life;
-            ctx.fillStyle = f.color;
-            ctx.beginPath(); ctx.arc(f.x, f.y, f.size, 0, Math.PI*2); ctx.fill();
-            f.x += f.vx; f.y += f.vy; f.vy += 0.05; f.life -= 0.015;
-            if(f.life <= 0) fireworks.splice(i, 1);
-        });
+        for (let i = 0; i < 80; i++) particles.push(new Particle());
 
-        if(Math.random() < 0.015) createExplosion(Math.random()*w, Math.random()*h*0.5);
-
-        requestAnimationFrame(animate);
-    }
-</script>
+        function animate() {
+            ctx.fillStyle = 'rgba(3, 3, 3, 0.2)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
